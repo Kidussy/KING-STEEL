@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>King Steel — Security Door Manufacturing</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300&family=Barlow+Condensed:wght@300;400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --gold: #c9a84c;
+    --gold-light: #e8c96a;
+    --gold-dark: #8a6a1e;
+    --black: #0a0a0a;
+    --dark: #111111;
+    --dark2: #1a1a1a;
+    --dark3: #232323;
+    --off-white: #f5f0e8;
+    --mid: #888;
+    --red-dark: #6b0f1a;
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--black);
+    color: var(--off-white);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 20px 60px;
+    background: linear-gradient(to bottom, rgba(0,0,0,.9), transparent);
+  }
+  .nav-logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900; font-size: 1.6rem; letter-spacing: .15em;
+    color: var(--gold);
+    display:flex; align-items:center; gap:12px;
+  }
+  .nav-logo span { color: var(--off-white); }
+  .nav-crown { font-size:1.4rem; }
+  .nav-links { display:flex; gap:36px; list-style:none; }
+  .nav-links a {
+    font-family:'Barlow Condensed', sans-serif; font-weight:600; font-size:.85rem;
+    letter-spacing:.2em; text-transform:uppercase; color: var(--off-white);
+    text-decoration:none; opacity:.75; transition: opacity .2s, color .2s;
+  }
+  .nav-links a:hover { opacity:1; color:var(--gold); }
+  .nav-cta {
+    font-family:'Barlow Condensed', sans-serif; font-weight:700; font-size:.8rem;
+    letter-spacing:.2em; text-transform:uppercase; padding:10px 24px;
+    border:1.5px solid var(--gold); color:var(--gold); background:transparent;
+    cursor:pointer; transition: background .2s, color .2s;
+    text-decoration:none;
+  }
+  .nav-cta:hover { background:var(--gold); color:var(--black); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display:grid; place-items:center;
+    position:relative; overflow:hidden;
+    background: var(--black);
+  }
+  .hero-bg {
+    position:absolute; inset:0;
+    background:
+      radial-gradient(ellipse 60% 80% at 70% 50%, rgba(201,168,76,.07) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 50% at 20% 80%, rgba(107,15,26,.12) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position:absolute; inset:0; opacity:.04;
+    background-image: linear-gradient(var(--gold) 1px, transparent 1px),
+                      linear-gradient(90deg, var(--gold) 1px, transparent 1px);
+    background-size: 80px 80px;
+  }
+  .hero-content {
+    position:relative; text-align:center; padding: 120px 40px 80px;
+    max-width: 900px; z-index:2;
+  }
+  .hero-tag {
+    display:inline-block;
+    font-family:'Barlow Condensed', sans-serif; font-weight:600; font-size:.75rem;
+    letter-spacing:.35em; text-transform:uppercase; color:var(--gold);
+    border: 1px solid var(--gold-dark); padding: 6px 20px; margin-bottom:32px;
+    opacity:0; animation: fadeUp .8s .2s forwards;
+  }
+  .hero-h1 {
+    font-family:'Barlow Condensed', sans-serif; font-weight:900;
+    font-size: clamp(4rem, 10vw, 9rem); line-height:.9;
+    letter-spacing:-.01em; text-transform:uppercase;
+    opacity:0; animation: fadeUp .9s .4s forwards;
+  }
+  .hero-h1 .gold { color: var(--gold); display:block; }
+  .hero-sub {
+    font-family:'Cormorant Garamond', serif; font-style:italic;
+    font-size:clamp(1.1rem, 2vw, 1.5rem); color:var(--mid); margin-top:24px;
+    letter-spacing:.05em;
+    opacity:0; animation: fadeUp .9s .6s forwards;
+  }
+  .hero-divider {
+    width:80px; height:2px; background:var(--gold); margin:36px auto;
+    opacity:0; animation: scaleIn .8s .8s forwards;
+  }
+  .hero-pills {
+    display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin-top:8px;
+    opacity:0; animation: fadeUp .8s 1s forwards;
+  }
+  .pill {
+    font-family:'Barlow Condensed', sans-serif; font-size:.78rem; font-weight:600;
+    letter-spacing:.18em; text-transform:uppercase; padding:8px 20px;
+    border:1px solid rgba(201,168,76,.3); color:rgba(245,240,232,.6);
+  }
+  .hero-cta-group {
+    display:flex; gap:16px; justify-content:center; margin-top:48px;
+    opacity:0; animation: fadeUp .8s 1.1s forwards;
+  }
+  .btn-primary {
+    font-family:'Barlow Condensed', sans-serif; font-weight:700; font-size:.85rem;
+    letter-spacing:.2em; text-transform:uppercase; padding:16px 40px;
+    background: var(--gold); color:var(--black); border:none; cursor:pointer;
+    transition: background .2s; text-decoration:none; display:inline-block;
+  }
+  .btn-primary:hover { background: var(--gold-light); }
+  .btn-secondary {
+    font-family:'Barlow Condensed', sans-serif; font-weight:600; font-size:.85rem;
+    letter-spacing:.2em; text-transform:uppercase; padding:16px 40px;
+    background:transparent; color:var(--off-white); border:1.5px solid rgba(245,240,232,.3);
+    cursor:pointer; transition: border-color .2s; text-decoration:none; display:inline-block;
+  }
+  .btn-secondary:hover { border-color:var(--off-white); }
+  .scroll-hint {
+    position:absolute; bottom:32px; left:50%; transform:translateX(-50%);
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    font-family:'Barlow Condensed', sans-serif; font-size:.7rem; letter-spacing:.3em;
+    text-transform:uppercase; color:var(--gold); opacity:.5;
+    animation: bounce 2s infinite;
+  }
+  .scroll-arrow { font-size:1.2rem; }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    background: var(--dark2); border-top:1px solid rgba(201,168,76,.2);
+    border-bottom:1px solid rgba(201,168,76,.2);
+    display:grid; grid-template-columns:repeat(4,1fr);
+  }
+  .stat-item {
+    padding:32px 20px; text-align:center;
+    border-right:1px solid rgba(201,168,76,.15);
+  }
+  .stat-item:last-child { border-right:none; }
+  .stat-num {
+    font-family:'Barlow Condensed', sans-serif; font-weight:900; font-size:2.8rem;
+    color:var(--gold); display:block; line-height:1;
+  }
+  .stat-label {
+    font-size:.75rem; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--mid); margin-top:8px; display:block;
+  }
+
+  /* ── SECTION SHARED ── */
+  section { padding: 100px 60px; }
+  .section-tag {
+    font-family:'Barlow Condensed', sans-serif; font-weight:600; font-size:.72rem;
+    letter-spacing:.35em; text-transform:uppercase; color:var(--gold); display:block;
+    margin-bottom:16px;
+  }
+  .section-h2 {
+    font-family:'Barlow Condensed', sans-serif; font-weight:900;
+    font-size:clamp(2.4rem, 5vw, 4rem); text-transform:uppercase; line-height:.9;
+    letter-spacing:-.01em;
+  }
+  .section-h2 em { font-style:normal; color:var(--gold); }
+
+  /* ── ABOUT ── */
+  #about {
+    display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center;
+    background:var(--dark);
+  }
+  .about-text p {
+    font-family:'Cormorant Garamond', serif; font-size:1.2rem; line-height:1.8;
+    color:rgba(245,240,232,.75); margin-top:28px;
+  }
+  .about-text p + p { margin-top:16px; }
+  .about-values { margin-top:40px; display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .value-card {
+    padding:24px; border:1px solid rgba(201,168,76,.2);
+    background: rgba(201,168,76,.04);
+    transition: border-color .3s, background .3s;
+  }
+  .value-card:hover { border-color:var(--gold); background:rgba(201,168,76,.08); }
+  .value-icon { font-size:1.6rem; margin-bottom:12px; }
+  .value-title {
+    font-family:'Barlow Condensed', sans-serif; font-weight:700; font-size:.9rem;
+    letter-spacing:.15em; text-transform:uppercase; color:var(--gold);
+  }
+  .value-desc { font-size:.85rem; color:var(--mid); margin-top:6px; line-height:1.6; }
+  .about-visual {
+    position:relative; display:flex; flex-direction:column; gap:20px;
+  }
+  .about-img-big {
+    height:320px; background: linear-gradient(135deg, var(--dark3), var(--dark2));
+    border:1px solid rgba(201,168,76,.2); display:flex; align-items:center; justify-content:center;
+    font-family:'Barlow Condensed', sans-serif; font-size:5rem; color:rgba(201,168,76,.15);
+    font-weight:900; letter-spacing:.1em; position:relative; overflow:hidden;
+  }
+  .about-img-big::after {
+    content:''; position:absolute; inset:0;
+    background: linear-gradient(135deg, rgba(201,168,76,.05), transparent);
+  }
+  .about-badge {
+    position:absolute; bottom:20px; right:20px;
+    background:var(--gold); color:var(--black); padding:12px 20px;
+    font-family:'Barlow Condensed', sans-serif; font-weight:900; font-size:.75rem;
+    letter-spacing:.2em; text-transform:uppercase; z-index:2;
+  }
+
+  /* ── PRODUCTS ── */
+  #products { background: var(--black); }
+  .products-intro { max-width:600px; margin-bottom:60px; }
+  .products-intro .section-h2 { margin-bottom:20px; }
+  .products-intro p { color:var(--mid); line-height:1.7; }
+  .products-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; }
+  .product-card {
+    position:relative; overflow:hidden; cursor:pointer;
+    aspect-ratio:3/4;
+    background:var(--dark2);
+  }
+  .product-card-inner {
+    position:absolute; inset:0;
+    background: linear-gradient(135deg, var(--dark3) 0%, var(--dark2) 100%);
+    display:flex; align-items:flex-end;
+  }
+  .product-overlay {
+    position:absolute; inset:0;
+    background: linear-gradient(to top, rgba(0,0,0,.9) 0%, transparent 60%);
+    z-index:2;
+  }
+  .product-decor {
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    font-size:6rem; opacity:.06; color:var(--gold); font-weight:900;
+    font-family:'Barlow Condensed', sans-serif;
+  }
+  .product-info {
+    position:relative; z-index:3; padding:28px; width:100%;
+  }
+  .product-series {
+    font-family:'Barlow Condensed', sans-serif; font-weight:700; font-size:.72rem;
+    letter-spacing:.3em; text-transform:uppercase; color:var(--gold);
+  }
+  .product-name {
+    font-family:'Barlow Condensed', sans-serif; font-weight:900; font-size:1.8rem;
+    text-transform:uppercase; line-height:1; margin-top:4px;
+  }
+  .product-desc { font-size:.82rem; color:rgba(245,240,232,.6); margin-top:8px; line-height:1.5; }
+  .product-card:hover .product-overlay { background: linear-gradient(to top, rgba(0,0,0,.95) 0%, rgba(201,168,76,.05) 100%); }
+  .product-card:hover .product-decor { opacity:.12; }
+
+  /* Add door color swatches */
+  .door-swatch {
+    display:flex; gap:6px; margin-top:16px;
+  }
+  .swatch {
+    width:18px; height:18px; border-radius:50%;
+    border:1.5px solid rgba(255,255,255,.2);
+    transition: transform .2s;
+  }
+  .swatch:hover { transform:scale(1.3); }
+
+  /* ── FEATURES ── */
+  #features {
+    background: linear-gradient(135deg, var(--dark2) 0%, var(--dark) 100%);
+  }
+  .features-layout { display:grid; grid-template-columns:1fr 1.4fr; gap:80px; align-items:start; }
+  .features-list { display:flex; flex-direction:column; gap:0; margin-top:40px; }
+  .feature-item {
+    padding:24px 0; border-bottom:1px solid rgba(201,168,76,.12);
+    display:grid; grid-template-columns:48px 1fr; gap:20px; align-items:start;
+    transition: padding-left .3s;
+    cursor:pointer;
+  }
+  .feature-item:hover { padding-left:8px; }
+  .feature-item:first-child { border-top:1px solid rgba(201,168,76,.12); }
+  .feature-num {
+    font-family:'Barlow Condensed', sans-serif; font-weight:900; font-size:1.4rem;
+    color:rgba(201,168,76,.3); line-height:1;
+  }
+  .feature-item:hover .feature-num { color:var(--gold); }
+  .feature-name {
+    font-family:'Barlow Condensed', sans-serif; font-weight:700; font-size:1rem;
+    letter-spacing:.1em; text-transform:uppercase;
+  }
+  .feature-desc { font-size:.85rem; color:var(--mid); margin-top:6px; line-height:1.6; }
+  .features-visual {
+    position:relative; margin-top:40px;
+  }
+  .features-big-card {
+    background: linear-gradient(160deg, var(--dark3), var(--dark2));
+    border:1px solid rgba(201,168,76,.2); padding:48px;
+    position:relative; overflow:hidden;
+  }
+  .features-big-card::before {
+    content:''; position:absolute; top:-40px; right:-40px;
+    width:200px; height:200px; border-radius:50%;
+    background: radial-gradient(circle, rgba(201,168,76,.08), transparent 70%);
+  }
+  .fbig-label {
+    font-family:'Barlow Condensed', sans-serif; font-size:.72rem; font-weight:600;
+    letter-spacing:.3em; text-transform:uppercase; color:var(--gold);
+  }
+  .fbig-h3 {
+    font-family:'Barlow Condensed', sans-serif; font-weight:900; font-size:3rem;
+    text-transform:uppercase; line-height:.95; margin-top:12px;
+  }
+  .fbig-h3 span { color:var(--gold); }
+  .fbig-p {
+    font-family:'Cormorant Garamond', serif; font-size:1.1rem; line-height:1.8;
+    color:rgba(245,240,232,.7); margin-top:24px;
+  }
+  .cert-badges { display:flex; gap:12px; flex-wrap:wrap; margin-top:32px; }
+  .cert {
+    padding:8px 16px; border:1px solid rgba(201,168,76,.3);
+    font-family:'Barlow Condensed', sans-serif; font-size:.72rem; font-weight:700;
+    letter-spacing:.2em; text-transform:uppercase; color:var(--gold);
+  }
+
+  /* ── DOOR GALLERY ── */
+  #gallery { background:var(--black); }
+  .gallery-header { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:48px; }
+  .gallery-scroll {
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap:3px;
+  }
+  .gallery-item {
+    aspect-ratio:2/3; overflow:hidden; position:relative;
+    background:var(--dark3); cursor:pointer;
+  }
+  .gallery-item-inner {
+    width:100%; height:100%;
+    background: var(--dark2);
+    display:flex; align-items:center; justify-content:center;
+    transition: transform .4s;
+    position:relative;
+  }
+  .gallery-item:hover .gallery-item-inner { transform:scale(1.03); }
+  .door-icon {
+    font-size:4rem; opacity:.1; color:var(--gold);
+    font-family:'Barlow Condensed', sans-serif; font-weight:900;
+    position:absolute;
+  }
+  .door-color-bar {
+    position:absolute; bottom:0; left:0; right:0; height:4px;
+  }
+  .gallery-item-label {
+    position:absolute; bottom:16px; left:16px; right:16px; z-index:2;
+  }
+  .gil-name {
+    font-family:'Barlow Condensed', sans-serif; font-weight:700; font-size:.85rem;
+    letter-spacing:.15em; text-transform:uppercase; color:var(--off-white);
+    background:rgba(0,0,0,.7); display:inline-block; padding:4px 10px;
+  }
+
+  /* Door mockup styles */
+  .door-mockup {
+    width:100%; height:100%;
+    display:flex; flex-direction:column; align-items:center; justify-content:flex-end;
+    padding:0 20%;
+    padding-bottom:15%;
+    position:relative;
+  }
+  .door-frame {
+    width:100%; flex:1; max-height:85%;
+    display:flex; flex-direction:column; align-items:center;
+    border: 3px solid; position:relative;
+    margin-top:5%;
+  }
+  .door-panel {
+    width:82%; flex:1;
+    border: 2px solid rgba(255,255,255,.1);
+    position:relative; display:flex; align-items:center; justify-content:flex-end;
+    padding-right:15%;
+  }
+  .door-handle { width:4px; height:30%; border-radius:2px; background:rgba(200,180,150,.7); }
+
+  /* ── TESTIMONIAL / TRUST ── */
+  #trust { background: var(--dark); }
+  .trust-grid { display:grid; grid-template-columns:1fr 1fr; gap:48px; margin-top:60px; }
+  .trust-card {
+    padding:40px; border:1px solid rgba(201,168,76,.15);
+    position:relative; background:rgba(201,168,76,.03);
+  }
+  .trust-quote {
+    font-family:'Cormorant Garamond', serif; font-size:1.2rem; line-height:1.8;
+    color:rgba(245,240,232,.8); font-style:italic;
+  }
+  .trust-quote::before { content:'\201C'; font-size:4rem; color:var(--gold); opacity:.3; line-height:0; vertical-align:-.4em; margin-right:4px; }
+  .trust-author {
+    margin-top:28px; display:flex; align-items:center; gap:16px;
+  }
+  .trust-avatar {
+    width:44px; height:44px; border-radius:50%; background:var(--gold);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Barlow Condensed', sans-serif; font-weight:900; color:var(--black);
+  }
+  .trust-name {
+    font-family:'Barlow Condensed', sans-serif; font-weight:700; font-size:.9rem;
+    letter-spacing:.1em; text-transform:uppercase;
+  }
+  .trust-role { font-size:.78rem; color:var(--mid); margin-top:2px; }
+
+  /* ── CONTACT ── */
+  #contact {
+    background: linear-gradient(135deg, var(--dark2) 0%, var(--dark) 100%);
+    text-align:center; padding:120px 60px;
+    position:relative; overflow:hidden;
+  }
+  #contact::before {
+    content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    width:800px; height:800px; border-radius:50%;
+    background: radial-gradient(circle, rgba(201,168,76,.06), transparent 70%);
+    pointer-events:none;
+  }
+  .contact-inner { position:relative; z-index:2; max-width:700px; margin:0 auto; }
+  .contact-inner .section-h2 { font-size:clamp(2.5rem,6vw,5rem); margin:16px 0 32px; }
+  .contact-inner p {
+    font-family:'Cormorant Garamond', serif; font-size:1.2rem;
+    color:rgba(245,240,232,.65); line-height:1.8; margin-bottom:48px;
+  }
+  .contact-phones {
+    display:flex; justify-content:center; gap:32px; flex-wrap:wrap; margin-bottom:48px;
+  }
+  .phone-card {
+    padding:24px 40px; border:1px solid var(--gold-dark);
+    background:rgba(201,168,76,.06);
+    display:flex; align-items:center; gap:14px;
+  }
+  .phone-icon { font-size:1.4rem; color:var(--gold); }
+  .phone-num {
+    font-family:'Barlow Condensed', sans-serif; font-weight:700; font-size:1.3rem;
+    letter-spacing:.05em; color:var(--off-white);
+  }
+  .phone-label { font-size:.72rem; letter-spacing:.2em; text-transform:uppercase; color:var(--mid); }
+
+  /* ── FOOTER ── */
+  footer {
+    background:var(--black); border-top:1px solid rgba(201,168,76,.15);
+    padding:48px 60px; display:flex; justify-content:space-between; align-items:center;
+    flex-wrap:wrap; gap:24px;
+  }
+  .footer-logo {
+    font-family:'Barlow Condensed', sans-serif; font-weight:900; font-size:1.4rem;
+    letter-spacing:.15em; color:var(--gold);
+  }
+  .footer-logo span { color:rgba(245,240,232,.4); font-weight:300; margin-left:4px; }
+  .footer-tagline {
+    font-size:.75rem; letter-spacing:.3em; text-transform:uppercase; color:var(--mid);
+    margin-top:4px;
+  }
+  .footer-right { font-size:.78rem; color:var(--mid); letter-spacing:.1em; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(30px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+  @keyframes scaleIn {
+    from { opacity:0; transform:scaleX(0); }
+    to   { opacity:1; transform:scaleX(1); }
+  }
+  @keyframes bounce {
+    0%,100% { transform:translateX(-50%) translateY(0); }
+    50%      { transform:translateX(-50%) translateY(8px); }
+  }
+
+  /* ── LOCKS SECTION ── */
+  #locks { background: var(--dark); }
+  .locks-intro { max-width:680px; margin-bottom:64px; }
+  .locks-intro p { color:var(--mid); margin-top:20px; line-height:1.75; font-size:1rem; }
+  .locks-grid {
+    display:grid; grid-template-columns:repeat(3,1fr); gap:2px;
+  }
+  .lock-card {
+    background: var(--dark2); padding:40px 32px;
+    border-top:3px solid transparent;
+    transition: border-color .3s, background .3s, transform .3s;
+    position:relative; overflow:hidden; cursor:default;
+  }
+  .lock-card::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:3px;
+    background: var(--gold); transform:scaleX(0); transform-origin:left;
+    transition:transform .4s;
+  }
+  .lock-card:hover::before { transform:scaleX(1); }
+  .lock-card:hover { background:var(--dark3); transform:translateY(-4px); }
+  .lock-num {
+    font-family:'Barlow Condensed', sans-serif; font-weight:900; font-size:3.5rem;
+    color:rgba(201,168,76,.12); line-height:1; position:absolute; top:16px; right:20px;
+    transition:color .3s;
+  }
+  .lock-card:hover .lock-num { color:rgba(201,168,76,.22); }
+  .lock-icon-wrap {
+    width:52px; height:52px; border:1.5px solid rgba(201,168,76,.3);
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.5rem; margin-bottom:24px;
+    transition: border-color .3s, background .3s;
+  }
+  .lock-card:hover .lock-icon-wrap { border-color:var(--gold); background:rgba(201,168,76,.08); }
+  .lock-name {
+    font-family:'Barlow Condensed', sans-serif; font-weight:900; font-size:1.15rem;
+    text-transform:uppercase; letter-spacing:.08em; color:var(--off-white);
+    margin-bottom:12px;
+  }
+  .lock-tagline {
+    font-family:'Barlow Condensed', sans-serif; font-weight:600; font-size:.72rem;
+    letter-spacing:.25em; text-transform:uppercase; color:var(--gold);
+    margin-bottom:16px; display:block;
+  }
+  .lock-desc {
+    font-size:.875rem; color:rgba(245,240,232,.65); line-height:1.7;
+    margin-bottom:20px;
+  }
+  .lock-bullets { list-style:none; display:flex; flex-direction:column; gap:8px; }
+  .lock-bullets li {
+    font-size:.8rem; color:var(--mid); line-height:1.5;
+    display:flex; gap:10px; align-items:flex-start;
+  }
+  .lock-bullets li::before {
+    content:'✓'; color:var(--gold); font-size:.75rem; margin-top:1px; flex-shrink:0;
+  }
+  .lock-divider {
+    height:1px; background:rgba(201,168,76,.1); margin:2px 0;
+    grid-column:1/-1;
+  }
+  /* 3-col top row, 2-col bottom adjustments */
+  @media(min-width:901px){
+    .locks-grid { grid-template-columns: repeat(3,1fr); }
+    .lock-card.wide { grid-column: span 3; }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media(max-width:900px) {
+    nav { padding:16px 24px; }
+    .nav-links { display:none; }
+    section { padding:60px 24px; }
+    #about { grid-template-columns:1fr; gap:40px; }
+    .stats-bar { grid-template-columns:repeat(2,1fr); }
+    .products-grid { grid-template-columns:1fr 1fr; }
+    .locks-grid { grid-template-columns:1fr 1fr; }
+    .features-layout { grid-template-columns:1fr; }
+    .trust-grid { grid-template-columns:1fr; }
+    footer { flex-direction:column; text-align:center; }
+    .gallery-header { flex-direction:column; align-items:flex-start; gap:16px; }
+    .contact-phones { flex-direction:column; align-items:center; }
+  }
+  @media(max-width:600px) {
+    .products-grid { grid-template-columns:1fr; }
+    .about-values { grid-template-columns:1fr; }
+    .stat-item { padding:24px 12px; }
+    .stat-num { font-size:2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <span class="nav-crown">♛</span>
+    KING <span>STEEL</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#locks">Smart Locks</a></li>
+    <li><a href="#features">Why Us</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get a Quote</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <span class="hero-tag">Security Door Manufacturing · Ethiopia</span>
+    <h1 class="hero-h1">
+      KING
+      <span class="gold">STEEL</span>
+    </h1>
+    <p class="hero-sub">Engineered for strength. Designed for elegance.</p>
+    <div class="hero-divider"></div>
+    <div class="hero-pills">
+      <span class="pill">Strong</span>
+      <span class="pill">Secure</span>
+      <span class="pill">Stylish</span>
+    </div>
+    <div class="hero-cta-group">
+      <a href="#products" class="btn-primary">View Our Doors</a>
+      <a href="#contact" class="btn-secondary">Contact Us</a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <span class="scroll-arrow">↓</span>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <span class="stat-num">500+</span>
+    <span class="stat-label">Doors Installed</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">3</span>
+    <span class="stat-label">Door Series</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">5</span>
+    <span class="stat-label">Lock Technologies</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">100%</span>
+    <span class="stat-label">Customer Trust</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-text">
+    <span class="section-tag">Who We Are</span>
+    <h2 class="section-h2">BUILT STRONG.<br><em>BUILT FOR LIFE.</em></h2>
+    <p>King Steel is Ethiopia's premier security door manufacturer, delivering premium steel doors that combine uncompromising protection with refined aesthetic design. From homes to enterprises, every door we make is crafted to last a lifetime.</p>
+    <p>Our doors are engineered with reinforced steel, multi-point locking systems, anti-pry frames, and fire-resistant construction — then finished with elegant surfaces that complement any architectural style.</p>
+    <div class="about-values">
+      <div class="value-card">
+        <div class="value-icon">🛡️</div>
+        <div class="value-title">Maximum Security</div>
+        <div class="value-desc">Advanced locking systems for total peace of mind.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">⚙️</div>
+        <div class="value-title">Premium Steel</div>
+        <div class="value-desc">High-quality materials built to withstand anything.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">✦</div>
+        <div class="value-title">Expert Craft</div>
+        <div class="value-desc">Precision engineering and exceptional finish.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🏠</div>
+        <div class="value-title">Every Space</div>
+        <div class="value-desc">Perfect for homes, offices and commercial buildings.</div>
+      </div>
+    </div>
+  </div>
+  <div class="about-visual">
+    <div class="about-img-big">
+      <svg viewBox="0 0 260 360" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:70%;height:70%;opacity:.18;">
+        <rect x="8" y="8" width="244" height="344" rx="4" stroke="#c9a84c" stroke-width="3"/>
+        <rect x="24" y="24" width="212" height="296" rx="2" stroke="#c9a84c" stroke-width="1.5"/>
+        <rect x="130" y="24" width="2" height="296" fill="#c9a84c" opacity=".4"/>
+        <circle cx="110" cy="192" r="8" stroke="#c9a84c" stroke-width="2"/>
+        <rect x="106" y="168" width="8" height="48" rx="4" stroke="#c9a84c" stroke-width="1.5"/>
+      </svg>
+      <div class="about-badge">KING STEEL</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="products">
+  <div class="products-intro">
+    <span class="section-tag">Our Collections</span>
+    <h2 class="section-h2">THREE SERIES.<br><em>ONE STANDARD.</em></h2>
+    <p style="color:var(--mid);line-height:1.7;margin-top:20px;">Every series is built on the same foundation of structural integrity, with distinct personalities to match your vision.</p>
+  </div>
+  <div class="products-grid">
+
+    <!-- Classic -->
+    <div class="product-card">
+      <div class="product-card-inner" style="background:linear-gradient(160deg,#1c1c1c,#2a2a2a);">
+        <div class="product-overlay"></div>
+        <div class="product-decor">C</div>
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+          <svg viewBox="0 0 140 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:55%;height:65%;opacity:.25;">
+            <rect x="4" y="4" width="132" height="192" rx="3" stroke="#c9a84c" stroke-width="2"/>
+            <rect x="14" y="14" width="112" height="172" stroke="#c9a84c" stroke-width="1"/>
+            <rect x="22" y="22" width="96" height="52" rx="2" stroke="#c9a84c" stroke-width="1"/>
+            <rect x="22" y="82" width="96" height="52" rx="2" stroke="#c9a84c" stroke-width="1"/>
+            <rect x="22" y="142" width="96" height="34" rx="2" stroke="#c9a84c" stroke-width="1"/>
+            <circle cx="95" cy="108" r="5" stroke="#c9a84c" stroke-width="1.5"/>
+            <rect x="91" y="98" width="4" height="24" rx="2" stroke="#c9a84c" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="product-info">
+          <span class="product-series">Series 01</span>
+          <div class="product-name">Classic</div>
+          <p class="product-desc">Timeless design with superior security. The foundational King Steel door for every home.</p>
+          <div class="door-swatch">
+            <div class="swatch" style="background:#4a4a4a;" title="Graphite"></div>
+            <div class="swatch" style="background:#6b8e6b;" title="Forest Green"></div>
+            <div class="swatch" style="background:#8B7355;" title="Walnut Brown"></div>
+            <div class="swatch" style="background:#c0bdb8;" title="Silver"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Premium -->
+    <div class="product-card">
+      <div class="product-card-inner" style="background:linear-gradient(160deg,#1a1610,#2a2218);">
+        <div class="product-overlay"></div>
+        <div class="product-decor">P</div>
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+          <svg viewBox="0 0 140 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:55%;height:65%;opacity:.28;">
+            <rect x="4" y="4" width="88" height="192" rx="3" stroke="#c9a84c" stroke-width="2"/>
+            <rect x="96" y="4" width="40" height="192" rx="3" stroke="#c9a84c" stroke-width="1.5"/>
+            <rect x="14" y="14" width="68" height="76" rx="2" stroke="#c9a84c" stroke-width="1"/>
+            <rect x="14" y="98" width="68" height="52" rx="2" stroke="#c9a84c" stroke-width="1"/>
+            <rect x="14" y="158" width="68" height="32" rx="2" stroke="#c9a84c" stroke-width="1"/>
+            <circle cx="72" cy="124" r="5" stroke="#c9a84c" stroke-width="1.5"/>
+            <rect x="68" y="112" width="4" height="24" rx="2" stroke="#c9a84c" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="product-info">
+          <span class="product-series" style="color:#e8c96a;">Series 02 — Bestseller</span>
+          <div class="product-name">Premium</div>
+          <p class="product-desc">Elegant finishes matched with advanced protection. Style and safety in perfect balance.</p>
+          <div class="door-swatch">
+            <div class="swatch" style="background:#2c2c2c;" title="Matte Black"></div>
+            <div class="swatch" style="background:#5c4a3a;" title="Dark Walnut"></div>
+            <div class="swatch" style="background:#3d6b5a;" title="Emerald"></div>
+            <div class="swatch" style="background:#2a3d5c;" title="Navy"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ultra -->
+    <div class="product-card">
+      <div class="product-card-inner" style="background:linear-gradient(160deg,#0e0e10,#1a1a20);">
+        <div class="product-overlay"></div>
+        <div class="product-decor">U</div>
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+          <svg viewBox="0 0 140 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:55%;height:65%;opacity:.25;">
+            <rect x="4" y="4" width="132" height="192" rx="3" stroke="#c9a84c" stroke-width="2.5"/>
+            <line x1="70" y1="4" x2="70" y2="196" stroke="#c9a84c" stroke-width="1"/>
+            <line x1="4" y1="68" x2="136" y2="68" stroke="#c9a84c" stroke-width="1"/>
+            <line x1="4" y1="128" x2="136" y2="128" stroke="#c9a84c" stroke-width="1"/>
+            <rect x="14" y="14" width="112" height="48" rx="1" stroke="#c9a84c" stroke-width="1" opacity=".5"/>
+            <circle cx="95" cy="100" r="7" stroke="#c9a84c" stroke-width="2"/>
+            <rect x="90" y="86" width="5" height="28" rx="2.5" stroke="#c9a84c" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="product-info">
+          <span class="product-series">Series 03 — Ultimate</span>
+          <div class="product-name">Ultra</div>
+          <p class="product-desc">Modern, heavy-duty doors for ultimate performance. For those who demand the absolute best.</p>
+          <div class="door-swatch">
+            <div class="swatch" style="background:#111;" title="Piano Black"></div>
+            <div class="swatch" style="background:#c9a84c;" title="Gold Edition"></div>
+            <div class="swatch" style="background:#5a3e3e;" title="Burgundy"></div>
+            <div class="swatch" style="background:#1a1a2e;" title="Midnight"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SMART LOCKS -->
+<section id="locks">
+  <div class="locks-intro">
+    <span class="section-tag">Access Control Systems</span>
+    <h2 class="section-h2">SMART LOCKING<br><em>SOLUTIONS.</em></h2>
+    <p>Beyond the door itself, King Steel offers a complete range of intelligent locking systems — from fingerprint biometrics to remotely managed commercial locks. Choose the access technology that fits your lifestyle, security level, and building type.</p>
+  </div>
+
+  <div class="locks-grid">
+
+    <!-- 01 Biometric -->
+    <div class="lock-card">
+      <span class="lock-num">01</span>
+      <div class="lock-icon-wrap">🖐</div>
+      <span class="lock-tagline">You are the key.</span>
+      <div class="lock-name">Biometric Locks</div>
+      <p class="lock-desc">Grant access based on unique physiological traits. Virtually impossible to duplicate or share — your body is the credential.</p>
+      <ul class="lock-bullets">
+        <li>Fingerprint scanners — fast, familiar, reliable</li>
+        <li>Palm vein readers — highly secure, contactless</li>
+        <li>3D facial recognition — advanced anti-spoofing technology</li>
+        <li>Multi-user support with individual access logs</li>
+        <li>Ideal for high-security residential and enterprise environments</li>
+      </ul>
+    </div>
+
+    <!-- 02 Keypad -->
+    <div class="lock-card">
+      <span class="lock-num">02</span>
+      <div class="lock-icon-wrap">🔢</div>
+      <span class="lock-tagline">Secure with a PIN.</span>
+      <div class="lock-name">Keypad (Code) Locks</div>
+      <p class="lock-desc">Require users to input a pre-programmed numeric PIN or password to unlock. No keys to lose, copy, or forget.</p>
+      <ul class="lock-bullets">
+        <li>Numeric PIN / password access</li>
+        <li>Backlit keypad for easy use in any lighting</li>
+        <li>Temporary codes for guests or service workers</li>
+        <li>Tamper alarm & auto-lock options</li>
+        <li>Excellent for apartments, offices, and rental properties</li>
+      </ul>
+    </div>
+
+    <!-- 03 Smart / Wi-Fi -->
+    <div class="lock-card">
+      <span class="lock-num">03</span>
+      <div class="lock-icon-wrap">📶</div>
+      <span class="lock-tagline">Smart access. Anywhere.</span>
+      <div class="lock-name">Smart / Wi-Fi Locks</div>
+      <p class="lock-desc">Connect to your home network or smartphone via Bluetooth or Wi-Fi. Full control from anywhere in the world, anytime.</p>
+      <ul class="lock-bullets">
+        <li>Remote lock/unlock via mobile app</li>
+        <li>Real-time notifications & activity logs</li>
+        <li>Smart home integration (Google Home, Apple HomeKit)</li>
+        <li>Grant, revoke & manage access remotely</li>
+        <li>Auto-lock schedules and geofencing support</li>
+      </ul>
+    </div>
+
+    <!-- 04 RFID -->
+    <div class="lock-card">
+      <span class="lock-num">04</span>
+      <div class="lock-icon-wrap">🪪</div>
+      <span class="lock-tagline">Tap. Access. Go.</span>
+      <div class="lock-name">RFID / Key Fob Locks</div>
+      <p class="lock-desc">Utilize Radio Frequency Identification to transmit a signal. Users tap a plastic card or key fob against the sensor — no insertion, no friction.</p>
+      <ul class="lock-bullets">
+        <li>RFID cards, key fobs & tags supported</li>
+        <li>Quick & convenient contactless access</li>
+        <li>Easy to issue, revoke & reprogram</li>
+        <li>Industry standard for hotels and corporate buildings</li>
+        <li>Perfect for offices, schools & apartment complexes</li>
+      </ul>
+    </div>
+
+    <!-- 05 Electromechanical -->
+    <div class="lock-card">
+      <span class="lock-num">05</span>
+      <div class="lock-icon-wrap">⚡</div>
+      <span class="lock-tagline">Built for strength. Designed for control.</span>
+      <div class="lock-name">Electromechanical & Commercial Locks</div>
+      <p class="lock-desc">Designed for high-traffic or high-security environments. Heavy-duty mechanisms managed by centralized access control software.</p>
+      <ul class="lock-bullets">
+        <li>Electric strikes — fail-safe or fail-secure configurations</li>
+        <li>Magnetic locks — powerful electromagnetic holding force</li>
+        <li>Robust cylindrical locks for industrial use</li>
+        <li>Seamless integration with property management software</li>
+        <li>Durable, reliable, built to meet safety & compliance standards</li>
+      </ul>
+    </div>
+
+    <!-- CTA card -->
+    <div class="lock-card" style="background:linear-gradient(135deg,rgba(201,168,76,.12),rgba(201,168,76,.05));border:1px solid rgba(201,168,76,.25);display:flex;flex-direction:column;justify-content:center;align-items:flex-start;">
+      <span class="lock-num" style="color:rgba(201,168,76,.25);">✦</span>
+      <div class="lock-icon-wrap" style="border-color:var(--gold);background:rgba(201,168,76,.1);">🔐</div>
+      <span class="lock-tagline">One solution. Every need.</span>
+      <div class="lock-name" style="color:var(--gold);">Not Sure Which Lock?</div>
+      <p class="lock-desc" style="color:rgba(245,240,232,.75);">Our security consultants will assess your space and recommend the perfect combination of door and locking system — at no charge.</p>
+      <a href="#contact" class="btn-primary" style="margin-top:auto;font-size:.8rem;padding:14px 28px;">Free Consultation →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="features-layout">
+    <div>
+      <span class="section-tag">Engineering Excellence</span>
+      <h2 class="section-h2">BUILT TO<br><em>PROTECT.</em></h2>
+      <div class="features-list">
+        <div class="feature-item">
+          <span class="feature-num">01</span>
+          <div>
+            <div class="feature-name">Reinforced Steel Core</div>
+            <div class="feature-desc">Heavy-duty steel construction resists forced entry, cutting, and impact damage.</div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-num">02</span>
+          <div>
+            <div class="feature-name">Multi-Point Locking</div>
+            <div class="feature-desc">Advanced locking system secures at multiple points simultaneously for maximum resistance.</div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-num">03</span>
+          <div>
+            <div class="feature-name">Anti-Pry Design</div>
+            <div class="feature-desc">Built-in anti-pry frame and tamper-resistant hinges prevent any bypass attempt.</div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-num">04</span>
+          <div>
+            <div class="feature-name">Fire & Impact Resistant</div>
+            <div class="feature-desc">Tested for durability, safety, and long-lasting protection against extreme conditions.</div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-num">05</span>
+          <div>
+            <div class="feature-name">Weather & Sound Sealed</div>
+            <div class="feature-desc">Built to withstand extreme weather and significantly reduce exterior noise intrusion.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="features-visual">
+      <div class="features-big-card">
+        <span class="fbig-label">Our Promise</span>
+        <h3 class="fbig-h3">STRONG<br>SECURE<br><span>STYLISH</span></h3>
+        <p class="fbig-p">Every King Steel door is manufactured with premium materials, engineered to meet international safety standards, and finished with precision craftsmanship that makes it a statement piece for your space.</p>
+        <div class="cert-badges">
+          <span class="cert">Weather Resistant</span>
+          <span class="cert">Sound Insulated</span>
+          <span class="cert">Low Maintenance</span>
+          <span class="cert">Warranty Protected</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="gallery-header">
+    <div>
+      <span class="section-tag">Installed Works</span>
+      <h2 class="section-h2">OUR <em>DOORS.</em></h2>
+    </div>
+    <a href="#contact" class="btn-secondary" style="white-space:nowrap;">Request Custom →</a>
+  </div>
+  <div class="gallery-scroll">
+    <!-- Door 1: Teal Emergency -->
+    <div class="gallery-item">
+      <div class="gallery-item-inner">
+        <svg viewBox="0 0 100 160" xmlns="http://www.w3.org/2000/svg" style="width:80%;height:80%;position:absolute;">
+          <rect x="5" y="5" width="90" height="150" fill="#2a9d8f" rx="2"/>
+          <rect x="2" y="2" width="96" height="156" fill="none" stroke="#1a7065" stroke-width="3"/>
+          <rect x="15" y="70" width="70" height="8" fill="rgba(255,255,255,.3)" rx="2"/>
+          <rect x="15" y="75" width="8" height="6" fill="rgba(200,200,200,.5)" rx="1"/>
+        </svg>
+        <div class="door-color-bar" style="background:#2a9d8f;"></div>
+      </div>
+      <div class="gallery-item-label"><span class="gil-name">Teal · Panic Bar</span></div>
+    </div>
+    <!-- Door 2: Light Grey -->
+    <div class="gallery-item">
+      <div class="gallery-item-inner">
+        <svg viewBox="0 0 100 160" xmlns="http://www.w3.org/2000/svg" style="width:80%;height:80%;position:absolute;">
+          <rect x="5" y="5" width="90" height="150" fill="#c0c0c0" rx="2"/>
+          <rect x="2" y="2" width="96" height="156" fill="none" stroke="#a0a0a0" stroke-width="3"/>
+          <rect x="15" y="70" width="70" height="8" fill="rgba(160,160,160,.4)" rx="2"/>
+          <rect x="15" y="75" width="8" height="6" fill="rgba(180,180,180,.6)" rx="1"/>
+        </svg>
+        <div class="door-color-bar" style="background:#b0b0b0;"></div>
+      </div>
+      <div class="gallery-item-label"><span class="gil-name">Silver Grey · Panic Bar</span></div>
+    </div>
+    <!-- Door 3: Dark Grey Double -->
+    <div class="gallery-item">
+      <div class="gallery-item-inner">
+        <svg viewBox="0 0 140 160" xmlns="http://www.w3.org/2000/svg" style="width:88%;height:85%;position:absolute;">
+          <rect x="2" y="2" width="136" height="156" fill="none" stroke="#555" stroke-width="3"/>
+          <rect x="5" y="5" width="64" height="150" fill="#5a5a5a" rx="1"/>
+          <rect x="71" y="5" width="64" height="150" fill="#6a6a6a" rx="1"/>
+          <line x1="69" y1="5" x2="69" y2="155" stroke="#444" stroke-width="2"/>
+          <rect x="82" y="2" width="136" height="18" fill="#4a4a4a" rx="1" opacity=".6"/>
+          <circle cx="78" cy="85" r="5" fill="rgba(200,200,200,.5)"/>
+          <rect cx="78" r="2" x="76" y="70" width="4" height="30" fill="rgba(180,180,180,.4)" rx="2"/>
+        </svg>
+        <div class="door-color-bar" style="background:#5a5a5a;"></div>
+      </div>
+      <div class="gallery-item-label"><span class="gil-name">Charcoal · Double</span></div>
+    </div>
+    <!-- Door 4: Forest Green ribbed -->
+    <div class="gallery-item">
+      <div class="gallery-item-inner">
+        <svg viewBox="0 0 100 160" xmlns="http://www.w3.org/2000/svg" style="width:80%;height:82%;position:absolute;">
+          <rect x="5" y="5" width="56" height="150" fill="#2d6a4f" rx="1"/>
+          <rect x="63" y="5" width="32" height="150" fill="#2d6a4f" rx="1"/>
+          <rect x="2" y="2" width="96" height="156" fill="none" stroke="#1a4a35" stroke-width="3"/>
+          <rect x="2" y="2" width="96" height="14" fill="#1a4a35" rx="1" opacity=".8"/>
+          <!-- ribbed texture lines -->
+          <line x1="10" y1="20" x2="10" y2="152" stroke="rgba(0,0,0,.15)" stroke-width="1.5"/>
+          <line x1="18" y1="20" x2="18" y2="152" stroke="rgba(0,0,0,.15)" stroke-width="1.5"/>
+          <line x1="26" y1="20" x2="26" y2="152" stroke="rgba(0,0,0,.15)" stroke-width="1.5"/>
+          <line x1="34" y1="20" x2="34" y2="152" stroke="rgba(0,0,0,.15)" stroke-width="1.5"/>
+          <line x1="42" y1="20" x2="42" y2="152" stroke="rgba(0,0,0,.15)" stroke-width="1.5"/>
+          <line x1="50" y1="20" x2="50" y2="152" stroke="rgba(0,0,0,.15)" stroke-width="1.5"/>
+          <circle cx="46" cy="90" r="4" fill="rgba(200,200,200,.5)"/>
+        </svg>
+        <div class="door-color-bar" style="background:#2d6a4f;"></div>
+      </div>
+      <div class="gallery-item-label"><span class="gil-name">Forest Green · Ribbed</span></div>
+    </div>
+    <!-- Door 5: Dark Walnut panel -->
+    <div class="gallery-item">
+      <div class="gallery-item-inner">
+        <svg viewBox="0 0 100 160" xmlns="http://www.w3.org/2000/svg" style="width:80%;height:82%;position:absolute;">
+          <rect x="5" y="5" width="26" height="150" fill="#3d2b1f" rx="1"/>
+          <rect x="33" y="5" width="62" height="150" fill="#4a3526" rx="1"/>
+          <rect x="2" y="2" width="96" height="156" fill="none" stroke="#2a1a10" stroke-width="3"/>
+          <rect x="2" y="2" width="96" height="14" fill="#2a1a10" opacity=".8"/>
+          <!-- wood grain lines on main panel -->
+          <line x1="35" y1="20" x2="35" y2="152" stroke="rgba(255,255,255,.05)" stroke-width="2"/>
+          <line x1="55" y1="20" x2="55" y2="152" stroke="rgba(255,255,255,.05)" stroke-width="2"/>
+          <line x1="75" y1="20" x2="75" y2="152" stroke="rgba(255,255,255,.05)" stroke-width="2"/>
+          <!-- raised panels -->
+          <rect x="36" y="22" width="56" height="40" rx="2" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
+          <rect x="36" y="70" width="56" height="40" rx="2" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
+          <rect x="36" y="118" width="56" height="28" rx="2" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
+          <circle cx="52" cy="93" r="4" fill="rgba(200,200,200,.5)"/>
+          <rect x="50" y="80" width="3" height="26" rx="1.5" fill="rgba(180,180,180,.4)"/>
+        </svg>
+        <div class="door-color-bar" style="background:#4a3526;"></div>
+      </div>
+      <div class="gallery-item-label"><span class="gil-name">Dark Walnut · Panel</span></div>
+    </div>
+    <!-- Door 6: Matte Black double -->
+    <div class="gallery-item">
+      <div class="gallery-item-inner">
+        <svg viewBox="0 0 140 160" xmlns="http://www.w3.org/2000/svg" style="width:88%;height:85%;position:absolute;">
+          <rect x="2" y="2" width="136" height="156" fill="none" stroke="#222" stroke-width="3"/>
+          <rect x="5" y="5" width="64" height="150" fill="#222" rx="1"/>
+          <rect x="71" y="5" width="64" height="150" fill="#1a1a1a" rx="1"/>
+          <rect x="2" y="2" width="136" height="14" fill="#111" opacity=".9"/>
+          <line x1="69" y1="5" x2="69" y2="155" stroke="#333" stroke-width="2"/>
+          <!-- vertical lines texture -->
+          <line x1="15" y1="19" x2="15" y2="152" stroke="rgba(255,255,255,.04)" stroke-width="2"/>
+          <line x1="30" y1="19" x2="30" y2="152" stroke="rgba(255,255,255,.04)" stroke-width="2"/>
+          <line x1="45" y1="19" x2="45" y2="152" stroke="rgba(255,255,255,.04)" stroke-width="2"/>
+          <line x1="82" y1="19" x2="82" y2="152" stroke="rgba(255,255,255,.04)" stroke-width="2"/>
+          <line x1="97" y1="19" x2="97" y2="152" stroke="rgba(255,255,255,.04)" stroke-width="2"/>
+          <line x1="112" y1="19" x2="112" y2="152" stroke="rgba(255,255,255,.04)" stroke-width="2"/>
+          <rect x="73" y="76" width="3" height="32" rx="1.5" fill="rgba(180,180,180,.3)"/>
+        </svg>
+        <div class="door-color-bar" style="background:#222;"></div>
+      </div>
+      <div class="gallery-item-label"><span class="gil-name">Matte Black · Double</span></div>
+    </div>
+    <!-- Door 7: Navy Blue panel -->
+    <div class="gallery-item">
+      <div class="gallery-item-inner">
+        <svg viewBox="0 0 100 160" xmlns="http://www.w3.org/2000/svg" style="width:80%;height:82%;position:absolute;">
+          <rect x="5" y="5" width="26" height="150" fill="#1a2a4a" rx="1"/>
+          <rect x="33" y="5" width="62" height="150" fill="#22344a" rx="1"/>
+          <rect x="2" y="2" width="96" height="156" fill="none" stroke="#12203a" stroke-width="3"/>
+          <rect x="2" y="2" width="96" height="14" fill="#12203a" opacity=".9"/>
+          <!-- square panels 3x2 -->
+          <rect x="36" y="22" width="25" height="25" rx="2" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>
+          <rect x="65" y="22" width="25" height="25" rx="2" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>
+          <rect x="36" y="52" width="25" height="25" rx="2" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>
+          <rect x="65" y="52" width="25" height="25" rx="2" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>
+          <rect x="36" y="82" width="25" height="25" rx="2" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>
+          <rect x="65" y="82" width="25" height="25" rx="2" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>
+          <rect x="36" y="112" width="25" height="25" rx="2" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>
+          <rect x="65" y="112" width="25" height="25" rx="2" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>
+          <circle cx="52" cy="95" r="4" fill="rgba(200,200,200,.5)"/>
+        </svg>
+        <div class="door-color-bar" style="background:#22344a;"></div>
+      </div>
+      <div class="gallery-item-label"><span class="gil-name">Navy Blue · Panel</span></div>
+    </div>
+    <!-- Door 8: Lavender -->
+    <div class="gallery-item">
+      <div class="gallery-item-inner">
+        <svg viewBox="0 0 100 160" xmlns="http://www.w3.org/2000/svg" style="width:80%;height:82%;position:absolute;">
+          <rect x="5" y="5" width="26" height="150" fill="#8a7fa8" rx="1"/>
+          <rect x="33" y="5" width="62" height="150" fill="#9988bb" rx="1"/>
+          <rect x="2" y="2" width="96" height="156" fill="none" stroke="#6a608a" stroke-width="3"/>
+          <rect x="2" y="2" width="96" height="22" fill="transparent" />
+          <!-- panel design -->
+          <line x1="8" y1="18" x2="8" y2="152" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="1"/>
+          <rect x="36" y="22" width="56" height="40" rx="2" fill="none" stroke="rgba(255,255,255,.15)" stroke-width="1.5"/>
+          <rect x="36" y="70" width="56" height="40" rx="2" fill="none" stroke="rgba(255,255,255,.15)" stroke-width="1.5"/>
+          <rect x="36" y="118" width="56" height="28" rx="2" fill="none" stroke="rgba(255,255,255,.15)" stroke-width="1.5"/>
+          <rect x="46" y="78" width="4" height="32" rx="2" fill="rgba(50,50,80,.5)"/>
+        </svg>
+        <div class="door-color-bar" style="background:#9988bb;"></div>
+      </div>
+      <div class="gallery-item-label"><span class="gil-name">Lavender · Panel</span></div>
+    </div>
+    <!-- Door 9: Chocolate Wide Double -->
+    <div class="gallery-item">
+      <div class="gallery-item-inner">
+        <svg viewBox="0 0 180 160" xmlns="http://www.w3.org/2000/svg" style="width:90%;height:85%;position:absolute;">
+          <rect x="2" y="2" width="176" height="156" fill="none" stroke="#3a2010" stroke-width="3"/>
+          <rect x="5" y="5" width="40" height="150" fill="#4a2e18" rx="1"/>
+          <rect x="47" y="5" width="62" height="150" fill="#5a3820" rx="1"/>
+          <rect x="111" y="5" width="62" height="150" fill="#4a2e18" rx="1"/>
+          <rect x="2" y="2" width="176" height="16" fill="#2a1808" opacity=".8"/>
+          <line x1="45" y1="5" x2="45" y2="155" stroke="#3a2010" stroke-width="2"/>
+          <line x1="109" y1="5" x2="109" y2="155" stroke="#3a2010" stroke-width="2"/>
+          <!-- wood grain -->
+          <line x1="60" y1="20" x2="60" y2="152" stroke="rgba(255,255,255,.04)" stroke-width="2"/>
+          <line x1="80" y1="20" x2="80" y2="152" stroke="rgba(255,255,255,.04)" stroke-width="2"/>
+          <line x1="100" y1="20" x2="100" y2="152" stroke="rgba(255,255,255,.04)" stroke-width="2"/>
+          <circle cx="89" cy="90" r="5" fill="rgba(200,200,200,.4)"/>
+          <rect x="86" y="76" width="4" height="28" rx="2" fill="rgba(180,180,180,.35)"/>
+        </svg>
+        <div class="door-color-bar" style="background:#5a3820;"></div>
+      </div>
+      <div class="gallery-item-label"><span class="gil-name">Chocolate · Wide</span></div>
+    </div>
+    <!-- Door 10: Graphite Wide smooth -->
+    <div class="gallery-item">
+      <div class="gallery-item-inner">
+        <svg viewBox="0 0 180 160" xmlns="http://www.w3.org/2000/svg" style="width:90%;height:85%;position:absolute;">
+          <rect x="2" y="2" width="176" height="156" fill="none" stroke="#333" stroke-width="3"/>
+          <rect x="5" y="5" width="40" height="150" fill="#3a3a3a" rx="1"/>
+          <rect x="47" y="5" width="62" height="150" fill="#454545" rx="1"/>
+          <rect x="111" y="5" width="62" height="150" fill="#3a3a3a" rx="1"/>
+          <rect x="2" y="2" width="176" height="14" fill="#2a2a2a" opacity=".9"/>
+          <line x1="45" y1="5" x2="45" y2="155" stroke="#2a2a2a" stroke-width="2"/>
+          <line x1="109" y1="5" x2="109" y2="155" stroke="#2a2a2a" stroke-width="2"/>
+          <!-- vertical lines -->
+          <line x1="58" y1="18" x2="58" y2="152" stroke="rgba(255,255,255,.05)" stroke-width="2"/>
+          <line x1="78" y1="18" x2="78" y2="152" stroke="rgba(255,255,255,.05)" stroke-width="2"/>
+          <line x1="98" y1="18" x2="98" y2="152" stroke="rgba(255,255,255,.05)" stroke-width="2"/>
+          <rect x="86" y="76" width="3" height="30" rx="1.5" fill="rgba(200,200,200,.3)"/>
+        </svg>
+        <div class="door-color-bar" style="background:#444;"></div>
+      </div>
+      <div class="gallery-item-label"><span class="gil-name">Graphite · Wide Double</span></div>
+    </div>
+    <!-- Door 11: Plain White double with glass -->
+    <div class="gallery-item">
+      <div class="gallery-item-inner" style="background:#e8e8e8;">
+        <svg viewBox="0 0 140 170" xmlns="http://www.w3.org/2000/svg" style="width:85%;height:88%;position:absolute;">
+          <rect x="2" y="2" width="136" height="168" fill="none" stroke="#ccc" stroke-width="3"/>
+          <rect x="5" y="28" width="64" height="138" fill="#f0f0f0" rx="1"/>
+          <rect x="71" y="28" width="64" height="138" fill="#e8e8e8" rx="1"/>
+          <rect x="2" y="2" width="136" height="24" fill="rgba(200,230,255,.6)" rx="1"/>
+          <line x1="69" y1="28" x2="69" y2="166" stroke="#ddd" stroke-width="1.5"/>
+          <rect x="86" y="76" width="3" height="32" rx="1.5" fill="rgba(80,80,80,.3)"/>
+          <rect x="83" y="85" width="5" height="5" rx="1" fill="rgba(80,80,80,.2)"/>
+        </svg>
+        <div class="door-color-bar" style="background:#ddd;"></div>
+      </div>
+      <div class="gallery-item-label"><span class="gil-name" style="color:#333;">White · Double + Glass</span></div>
+    </div>
+    <!-- Door 12: Dark graphite barred -->
+    <div class="gallery-item">
+      <div class="gallery-item-inner">
+        <svg viewBox="0 0 100 170" xmlns="http://www.w3.org/2000/svg" style="width:80%;height:85%;position:absolute;">
+          <rect x="2" y="2" width="96" height="168" fill="none" stroke="#333" stroke-width="3"/>
+          <rect x="2" y="2" width="96" height="32" fill="rgba(80,80,80,.2)"/>
+          <!-- horizontal bars in glass section -->
+          <line x1="4" y1="12" x2="94" y2="12" stroke="rgba(150,150,150,.4)" stroke-width="2"/>
+          <line x1="4" y1="20" x2="94" y2="20" stroke="rgba(150,150,150,.4)" stroke-width="2"/>
+          <line x1="4" y1="28" x2="94" y2="28" stroke="rgba(150,150,150,.4)" stroke-width="2"/>
+          <rect x="5" y="36" width="42" height="128" fill="#3a3a3a" rx="1"/>
+          <rect x="50" y="36" width="45" height="128" fill="#404040" rx="1"/>
+          <line x1="48" y1="36" x2="48" y2="164" stroke="#2a2a2a" stroke-width="2"/>
+          <circle cx="55" cy="100" r="4" fill="rgba(200,200,200,.5)"/>
+          <rect x="52" y="88" width="3" height="24" rx="1.5" fill="rgba(180,180,180,.4)"/>
+        </svg>
+        <div class="door-color-bar" style="background:#3a3a3a;"></div>
+      </div>
+      <div class="gallery-item-label"><span class="gil-name">Dark Grey · Barred Top</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section id="trust">
+  <span class="section-tag">Client Testimonials</span>
+  <h2 class="section-h2">TRUSTED BY<br><em>MANY.</em></h2>
+  <div class="trust-grid">
+    <div class="trust-card">
+      <p class="trust-quote">The King Steel door we installed is exactly what our apartment building needed. The build quality is exceptional and the installation team was professional.</p>
+      <div class="trust-author">
+        <div class="trust-avatar">DA</div>
+        <div>
+          <div class="trust-name">Daniel Alemu</div>
+          <div class="trust-role">Property Developer · Addis Ababa</div>
+        </div>
+      </div>
+    </div>
+    <div class="trust-card">
+      <p class="trust-quote">We outfitted our entire office complex with King Steel doors. The combination of security and elegant design exceeded all our expectations.</p>
+      <div class="trust-author">
+        <div class="trust-avatar">ST</div>
+        <div>
+          <div class="trust-name">Sara Tadesse</div>
+          <div class="trust-role">Facility Manager · Bole Business Park</div>
+        </div>
+      </div>
+    </div>
+    <div class="trust-card">
+      <p class="trust-quote">Best investment for our home. The multi-point locking system gives us genuine peace of mind. Every family in Addis should have a King Steel door.</p>
+      <div class="trust-author">
+        <div class="trust-avatar">MB</div>
+        <div>
+          <div class="trust-name">Mekdes Bekele</div>
+          <div class="trust-role">Homeowner · Kazanchis</div>
+        </div>
+      </div>
+    </div>
+    <div class="trust-card">
+      <p class="trust-quote">King Steel delivered on time, on budget, and the doors look absolutely stunning. The custom walnut finish matched our lobby perfectly.</p>
+      <div class="trust-author">
+        <div class="trust-avatar">YH</div>
+        <div>
+          <div class="trust-name">Yonas Haile</div>
+          <div class="trust-role">Architect · Addis Design Studio</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <span class="section-tag">Get In Touch</span>
+    <h2 class="section-h2">SECURE TODAY.<br><em>PROTECTED TOMORROW.</em></h2>
+    <p>Ready to protect what matters most? Call us for a free consultation and quote. Our team will guide you to the perfect door solution for your space.</p>
+    <div class="contact-phones">
+      <div class="phone-card">
+        <span class="phone-icon">📞</span>
+        <div>
+          <div class="phone-label">Call Us</div>
+          <div class="phone-num">+251 911 25 17 53</div>
+        </div>
+      </div>
+      <div class="phone-card">
+        <span class="phone-icon">📱</span>
+        <div>
+          <div class="phone-label">WhatsApp / Call</div>
+          <div class="phone-num">+251 911 20 74 66</div>
+        </div>
+      </div>
+    </div>
+    <a href="tel:+251911207466" class="btn-primary" style="font-size:1rem; padding:20px 60px;">Call Now — Free Quote</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">KING STEEL <span>Security Door Manufacturing</span></div>
+    <div class="footer-tagline">Strong · Secure · Stylish</div>
+  </div>
+  <div class="footer-right">
+    © 2026 King Steel · Addis Ababa, Ethiopia<br>
+    <span style="color:var(--gold);">ኪንግ ስቴል</span>
+  </div>
+</footer>
+
+<script>
+// Smooth scroll for nav links
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if(target) { e.preventDefault(); target.scrollIntoView({ behavior:'smooth' }); }
+  });
+});
+
+// Intersection Observer for fade-in
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.value-card, .product-card, .feature-item, .trust-card, .gallery-item, .stat-item').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(24px)';
+  el.style.transition = 'opacity .6s ease, transform .6s ease';
+  io.observe(el);
+});
+</script>
+</body>
+</html>
